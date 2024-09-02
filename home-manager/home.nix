@@ -47,6 +47,14 @@
     spotify
     bitwarden-desktop
     jetbrains-mono
+    pkgs.python312  # or pkgs.python310, pkgs.python38, etc.
+    pyenv
+    # Install pip if not included by default
+    pkgs.python312Packages.pip  # Adjust for the Python version chosen
+
+    # Some commonly used Python packages
+    pkgs.python312Packages.virtualenv  # For creating isolated environments
+    pkgs.python312Packages.flake8      # For linting
   ];
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
@@ -159,6 +167,11 @@
   };
   programs.spotify-player = {
     enable = true;
+  };
+  programs.pyenv = {
+    enable = true;
+    programs.pyenv.enableBashIntegration = true;
+    programs.pyenv.enableFishIntegration = true;
   };
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
