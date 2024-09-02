@@ -170,8 +170,8 @@
   };
   programs.pyenv = {
     enable = true;
-    programs.pyenv.enableBashIntegration = true;
-    programs.pyenv.enableFishIntegration = true;
+    enableBashIntegration = true;
+    enableFishIntegration = true;
   };
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
