@@ -6,7 +6,6 @@ Welcome to my Nix experiment! This is where I'm trying to tame the wild west of 
 
 - Turning my chaotic system setup into a well-oiled Nix machine
 - Managing my dev environment without losing my mind
-- Making sure my ROS robots don't revolt due to inconsistent environments
 
 ## The Dream
 
