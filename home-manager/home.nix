@@ -1,4 +1,16 @@
 { config, pkgs,lib, ... }:
+let
+  # Fetch nixGL
+  nixGL = import (lib.fetchGit {
+    url ="https://github.com/nix-community/nixGL.git";
+    ref = "main";
+  }) {};
+
+  # Create a wrapper script for launching Kitty with nixGL
+  kitty-wrapped = pkgs.writeShellScriptBin "kitty-wrapped" ''
+    ${nixGL}/bin/nixGL ${pkgs.kitty}/bin/kitty "$@"
+  '';
+in
 {
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -47,14 +59,15 @@
     spotify
     bitwarden-desktop
     jetbrains-mono
-    pkgs.python312  # or pkgs.python310, pkgs.python38, etc.
+    pkgs.python312
     pyenv
-    # Install pip if not included by default
-    pkgs.python312Packages.pip  # Adjust for the Python version chosen
-
-    # Some commonly used Python packages
-    pkgs.python312Packages.virtualenv  # For creating isolated environments
-    pkgs.python312Packages.flake8      # For linting
+    pkgs.python312Packages.pip
+    pkgs.python312Packages.virtualenv
+    pkgs.python312Packages.flake8
+    sway
+    swaylock
+    waybar
+    pavucontrol
   ];
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
@@ -153,6 +166,109 @@
         defaultBranch = "main";
       };
     };
+  };
+  # Enable Sway
+  wayland.windowManager.sway = {
+    enable = true;
+    config = {
+      # Sway configuration options
+      modifier = "Mod4"; # Use the Windows key as the modifier
+      terminal = "${pkgs.kitty}/bin/kitty"; # You can change this to your preferred terminal
+      menu = "${pkgs.dmenu}/bin/dmenu_run";
+
+      # Define key bindings
+      keybindings = {
+        "${config.wayland.windowManager.sway.config.modifier}+Return" = "exec ${config.wayland.windowManager.sway.config.terminal}";
+        "${config.wayland.windowManager.sway.config.modifier}+d" = "exec ${config.wayland.windowManager.sway.config.menu}";
+        "${config.wayland.windowManager.sway.config.modifier}+Shift+q" = "kill";
+        "${config.wayland.windowManager.sway.config.modifier}+Shift+e" = "exit";
+      };
+
+      # Basic status bar configuration
+      bars = [{
+        position = "bottom";
+        statusCommand = "${pkgs.i3status}/bin/i3status";
+      }];
+    };
+  };
+  # Waybar configuration
+  programs.waybar = {
+    enable = true;
+    settings = [{
+      height = 30;
+      modules-left = ["sway/workspaces" "sway/mode"];
+      modules-center = ["sway/window"];
+      modules-right = ["pulseaudio" "network" "cpu" "memory" "temperature" "clock" "tray"];
+      "sway/workspaces" = {
+        disable-scroll = true;
+        all-outputs = true;
+      };
+      "clock" = {
+        format-alt = "{:%Y-%m-%d}";
+      };
+      "cpu" = {
+        format = "{usage}% ";
+      };
+      "memory" = {
+        format = "{}% ";
+      };
+      "temperature" = {
+        critical-threshold = 80;
+        format = "{temperatureC}°C ";
+      };
+      "network" = {
+        format-wifi = "{essid} ({signalStrength}%) ";
+        format-ethernet = "{ifname}: {ipaddr}/{cidr} ";
+        format-disconnected = "Disconnected ⚠";
+      };
+      "pulseaudio" = {
+        format = "{volume}% {icon}";
+        format-bluetooth = "{volume}% {icon}";
+        format-muted = "";
+        format-icons = {
+          headphones = "";
+          handsfree = "";
+          headset = "";
+          phone = "";
+          portable = "";
+          car = "";
+          default = ["" ""];
+        };
+        on-click = "pavucontrol";
+      };
+    }];
+    style = ''
+      * {
+        border: none;
+        border-radius: 0;
+        font-family: "DejaVu Sans Mono", "FontAwesome 5 Free";
+        font-size: 13px;
+        min-height: 0;
+      }
+      window#waybar {
+        background: rgba(43, 48, 59, 0.5);
+        border-bottom: 3px solid rgba(100, 114, 125, 0.5);
+        color: white;
+      }
+      #workspaces button {
+        padding: 0 5px;
+        background: transparent;
+        color: white;
+        border-bottom: 3px solid transparent;
+      }
+      #workspaces button.focused {
+        background: #64727D;
+        border-bottom: 3px solid white;
+      }
+      #mode, #clock, #battery {
+        padding: 0 10px;
+        margin: 0 5px;
+      }
+      #mode {
+        background: #64727D;
+        border-bottom: 3px solid white;
+      }
+    '';
   };
   programs.vscode = {
     enable = true;
