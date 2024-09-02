@@ -44,6 +44,9 @@
     libva-utils
     onedrive
     vscode 
+    spotify
+    bitwarden-desktop
+    jetbrains-mono
   ];
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
@@ -63,6 +66,47 @@
     #   org.gradle.daemon.idletimeout=3600000
     # '';
   # };
+   home.file = {
+  ".config/onedrive/sync_list" = {
+      text = ''
+        Personlig
+        Semester 9
+        Semester 8
+        Semester 7
+        Semester 6
+      '';
+    };
+  };
+  # Manage the OneDrive systemd service file
+  home.file.".config/systemd/user/onedrive.service" = {
+    text = ''
+      [Unit]
+      Description=OneDrive Free Client for Linux
+      After=network-online.target
+
+      [Service]
+      ExecStart=%h/.nix-profile/bin/onedrive --monitor
+      Restart=on-failure
+      RestartSec=3
+
+      [Install]
+      WantedBy=default.target
+    '';
+  };
+  home.file.".config/Code/User/settings.json" = {
+    text = ''
+    {
+      "workbench.colorTheme": "Gruvbox Dark Soft",  # Replace with the correct theme name
+
+      // Font configuration
+      "editor.fontFamily": "JetBrains Mono, Consolas, 'Courier New', monospace",
+      "editor.fontSize": 14,
+      "editor.fontWeight": "normal",
+      "editor.lineHeight": 22,
+      "editor.letterSpacing": 0.5,
+    }
+    '';
+  };
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
@@ -103,6 +147,17 @@
     };
   };
   programs.vscode = {
+    enable = true;
+    extensions = with pkgs.vscode-extensions; [
+      pkgs.vscode-extensions.ms-python.python
+      pkgs.vscode-extensions.vscodevim.vim
+      pkgs.vscode-extensions.njpwerner.autodocstring
+      pkgs.vscode-extensions.github.copilot
+      pkgs.vscode-extensions.github.copilot-chat
+      pkgs.vscode-extensions.jdinhlife.gruvbox
+    ];
+  };
+  programs.spotify-player = {
     enable = true;
   };
   # Let Home Manager install and manage itself.
