@@ -63,7 +63,7 @@ in
     pyenv
     pkgs.python312Packages.pip
     pkgs.python312Packages.virtualenv
-    pkgs.python312Packages.flake8
+    direnv
     sway
     swaylock
     waybar
@@ -112,20 +112,6 @@ in
 
       [Install]
       WantedBy=default.target
-    '';
-  };
-  home.file.".config/Code/User/settings.json" = {
-    text = ''
-    {
-      "workbench.colorTheme": "Gruvbox Dark Soft",  # Replace with the correct theme name
-
-      // Font configuration
-      "editor.fontFamily": "JetBrains Mono, Consolas, 'Courier New', monospace",
-      "editor.fontSize": 14,
-      "editor.fontWeight": "normal",
-      "editor.lineHeight": 22,
-      "editor.letterSpacing": 0.5,
-    }
     '';
   };
 
@@ -279,7 +265,20 @@ in
       pkgs.vscode-extensions.github.copilot
       pkgs.vscode-extensions.github.copilot-chat
       pkgs.vscode-extensions.jdinhlife.gruvbox
+      pkgs.vscode-extensions.jnoortheen.nix-ide
+      pkgs.vscode-extensions.mkhl.direnv
+      pkgs.vscode-extensions.arrterian.nix-env-selector
     ];
+    userSettings = {
+      "files.autoSave" =  "onFocusChange";
+      "workbench.colorTheme" = "Gruvbox Dark Soft";
+
+      "editor.fontFamily" =  "JetBrains Mono, Consolas, 'Courier New', monospace";
+      "editor.fontSize" =  14;
+      "editor.fontWeight" = "normal";
+      "editor.lineHeight" = 22;
+      "editor.letterSpacing" =  0.5;
+    };
   };
   programs.spotify-player = {
     enable = true;
