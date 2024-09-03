@@ -153,6 +153,10 @@ in
       };
     };
   };
+  programs.bash = {
+    enable = true;
+    enableCompletion = true;
+  };
   # Enable Sway
   wayland.windowManager.sway = {
     enable = true;
@@ -288,6 +292,11 @@ in
     enable = true;
     enableBashIntegration = true;
     enableFishIntegration = true;
+  };
+  programs.direnv = {
+    enable = true;
+    enableBashIntegration = true;
+    nix-direnv.enable = true;
   };
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
