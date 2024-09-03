@@ -268,6 +268,7 @@ in
       pkgs.vscode-extensions.jnoortheen.nix-ide
       pkgs.vscode-extensions.mkhl.direnv
       pkgs.vscode-extensions.arrterian.nix-env-selector
+      pkgs.vscode-extensions.mhutchie.git-graph
     ];
     userSettings = {
       "files.autoSave" =  "onFocusChange";
