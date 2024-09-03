@@ -48,6 +48,7 @@ in
     slurp  # screen area selection tool
     wl-clipboard  # clipboard tool
     libGLU
+    nil
     meson
     cmake
     pkg-config
@@ -156,6 +157,7 @@ in
   programs.bash = {
     enable = true;
     enableCompletion = true;
+    bashrcExtra = lib.readFile ./bashrc_extra.sh;
   };
   # Enable Sway
   wayland.windowManager.sway = {
@@ -283,6 +285,16 @@ in
       "editor.fontWeight" = "normal";
       "editor.lineHeight" = 22;
       "editor.letterSpacing" =  0.5;
+      "terminal.integrated.defaultProfile.linux" = "bash";
+      "terminal.integrated.profiles.linux" = {
+        bash = {
+          path = "/bin/bash";
+          args = ["-l"];
+        };
+      };
+      "terminal.integrated.env.linux" = {
+        BASH_ENV = "\${HOME}/.bashrc";
+      };
     };
   };
   programs.spotify-player = {
