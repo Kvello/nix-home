@@ -44,6 +44,7 @@ in
     vim
     wofi
     kitty
+    texliveFull
     grim  # screenshot tool
     slurp  # screen area selection tool
     wl-clipboard  # clipboard tool
@@ -69,6 +70,8 @@ in
     swaylock
     waybar
     pavucontrol
+    glibc
+    firefox
   ];
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
