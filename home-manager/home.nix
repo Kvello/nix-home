@@ -37,8 +37,6 @@ in
   home.sessionPath = [
     "/usr/lib/locale"
   ];
-  # The home.packages option allows you to install Nix packages into your
-  # environment.
   home.packages = with pkgs; [
     git
     vim
@@ -73,6 +71,7 @@ in
     glibc
     firefox
     logseq
+    inotify-tools
   ];
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
@@ -103,22 +102,7 @@ in
       '';
     };
   };
-  # Manage the OneDrive systemd service file
-  home.file.".config/systemd/user/onedrive.service" = {
-    text = ''
-      [Unit]
-      Description=OneDrive Free Client for Linux
-      After=network-online.target
 
-      [Service]
-      ExecStart=%h/.nix-profile/bin/onedrive --monitor
-      Restart=on-failure
-      RestartSec=3
-
-      [Install]
-      WantedBy=default.target
-    '';
-  };
 
   # Home Manager can also manage your environment variables through
   # 'home.sessionVariables'. These will be explicitly sourced when using a
@@ -137,12 +121,13 @@ in
   #  /etc/profiles/per-user/markus/etc/profile.d/hm-session-vars.sh
   #
   home.sessionVariables = {
-  # ... your existing variables ...
     WLR_NO_HARDWARE_CURSORS = "1";
     LIBVA_DRIVER_NAME = "iHD";
     MOZ_ENABLE_WAYLAND = "1";
     XDG_SESSION_TYPE = "wayland";
     XDG_CURRENT_DESKTOP = "sway";
+    LOGSEQ_DIR = "$HOME/logseq";
+    LOGSEQ_SYNC_ADDR = "git@github.com:Kvello/logseq.git";
   };
   programs.git = {
     enable = true;
@@ -314,6 +299,42 @@ in
     enableBashIntegration = true;
     nix-direnv.enable = true;
   };
+
+  # Ensure systemd user services are enabled
+  systemd.user.enable = true;
+
+  # Define the existing OneDrive service
+  systemd.user.services = {
+    onedrive = {
+      Unit = {
+        Description = "OneDrive synchronization service";
+      };
+      Service = {
+        ExecStart = "${pkgs.onedrive}/bin/onedrive --monitor";
+        Restart = "on-failure";
+        RestartSec = 3;
+        User = "markus"; # Adjust as needed
+      };
+      Install = {
+        wantedBy = [ "default.target" ];
+      };
+    };
+    logseq-sync = {
+      Unit = {
+        Description = "Logseq sync service";
+      };
+      Service = {
+        ExecStart = "${pkgs.bash}/bin/bash ${config.home.sessionVariables.LOGSEQ_DIR}/logseq-sync-loop.sh";
+        Restart = "on-failure";
+        RestartSec = 3;
+        User = "markus"; # Adjust as needed
+      };
+      Install = {
+        wantedBy = [ "default.target" ];
+      };
+    };
+  };
+  systemd.user.systemctlPath = "/usr/bin/systemctl";
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
