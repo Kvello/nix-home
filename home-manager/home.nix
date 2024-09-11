@@ -72,6 +72,7 @@ in
     pavucontrol
     glibc
     firefox
+    logseq
   ];
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
