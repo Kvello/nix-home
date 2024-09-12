@@ -7,16 +7,18 @@ if [ ! -d "$LOGSEQ_DIR" ]; then
 	mkdir -p "$LOGSEQ_DIR"
 
 	cd "$LOGSEQ_DIR"
-	git clone "$LOGSEQ_SYNC_ADDR"
+	git clone "$LOGSEQ_SYNC_ADDR" .
 fi
 # Navigate to the Logseq directory
 cd "$LOGSEQ_DIR"
 
 # Monitor the directory for changes
-inotifywait -m -e  modify,create,delete,move -r . >/dev/null |
-while read -r; do
+inotifywait -m -e  modify,create,delete,move -r . --exclude '(\.git)' --format '%w %e'|
+while read -r file event; do
+    # Print the event details (optional)
+    echo "Detected event: $event on $file"
     # Pull any changes from the remote repository
-    git pull origin master
+    git pull origin main
 
     # Add any new or modified files to the staging area
     git add .
