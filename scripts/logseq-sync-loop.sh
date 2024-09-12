@@ -31,4 +31,5 @@ while read -r file event; do
         # Push the changes to the remote repository
         git push origin main
     fi
+    sleep 30
 done
