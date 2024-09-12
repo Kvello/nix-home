@@ -323,7 +323,20 @@ in
         Description = "Logseq sync service";
       };
       Service = {
-        ExecStart = "${pkgs.bash}/bin/bash ${config.home.homeDirectory}/.config/scripts/logseq-sync-loop.sh";
+        ExecStart = "${pkgs.bash}/bin/bash ${config.home.homeDirectory}/.config/scripts/logseq-sync-service.sh";
+        Restart = "on-failure";
+        RestartSec = 3;
+      };
+      Install = {
+        WantedBy = [ "multi-user.target" ];
+      };
+    };
+    home-manager-sync = {
+      Unit = {
+        Description = "Home-manager/config sync service";
+      };
+      Service = {
+        ExecStart = "${pkgs.bash}/bin/bash ${config.home.homeDirectory}/.config/scripts/home-manager-sync-service.sh";
         Restart = "on-failure";
         RestartSec = 3;
       };

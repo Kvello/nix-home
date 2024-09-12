@@ -1,17 +1,8 @@
 #!/bin/bash
 
-
-# Check that the logseq directory exists
-if [ ! -d "$LOGSEQ_DIR" ]; then
-	echo "Logseq directory not found, creating it..."
-	mkdir -p "$LOGSEQ_DIR"
-
-	cd "$LOGSEQ_DIR"
-	git clone "$LOGSEQ_SYNC_ADDR" .
-fi
 # Navigate to the Logseq directory
-cd "$LOGSEQ_DIR"
-
+cd "$HOME_MANAGER_DIR"
+git pull origin main
 # Monitor the directory for changes
 inotifywait -m -e  modify,create,delete,move -r . --exclude '(\.git)' --format '%w %e'|
 while read -r file event; do
@@ -25,6 +16,20 @@ while read -r file event; do
 
     # Check if there are any changes to commit
     if ! git diff --cached --quiet; then
+        # Get the latest commit message
+        last_commit_message=$(git log -1 --pretty=%B)
+        
+        # Extract the current version number
+        if [[ $last_commit_message =~ Version\ ([0-9]+) ]]; then
+            current_version=${BASH_REMATCH[1]}
+            new_version=$((current_version + 1))
+        else
+            # If no version found, start at 1
+            new_version=1
+        fi
+
+        # Commit the changes with the new version
+        git commit -m "Version $new_version"
         # Commit the changes with a message if there are any
         git commit -m "Automated sync"
 
