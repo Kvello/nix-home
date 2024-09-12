@@ -72,6 +72,7 @@ in
     firefox
     logseq
     inotify-tools
+    slack
   ];
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
@@ -264,10 +265,15 @@ in
       pkgs.vscode-extensions.mkhl.direnv
       pkgs.vscode-extensions.arrterian.nix-env-selector
       pkgs.vscode-extensions.mhutchie.git-graph
+      pkgs.vscode-extensions.pkief.material-icon-theme
     ];
     userSettings = {
       "files.autoSave" =  "onFocusChange";
       "workbench.colorTheme" = "Gruvbox Dark Soft";
+      "workbench.iconTheme" = "material-icon-theme";
+      "material-icon-theme.files.associations" =  {
+    
+      };
 
       "editor.fontFamily" =  "JetBrains Mono, Consolas, 'Courier New', monospace";
       "editor.fontSize" =  14;
