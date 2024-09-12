@@ -101,9 +101,6 @@ in
         Semester 6
       '';
     };
-    "${config.home.homeDirectory}/.config/scripts/logseq-sync-loop.sh" = {
-        source = ./scripts/logseq-sync-loop.sh;
-      };
   };
 
 
