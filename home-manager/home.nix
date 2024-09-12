@@ -92,7 +92,7 @@ in
     # '';
   # };
    home.file = {
-  ".config/onedrive/sync_list" = {
+    "${config.home.homeDirectory}/.config/onedrive/sync_list" = {
       text = ''
         Personlig
         Semester 9
@@ -101,6 +101,9 @@ in
         Semester 6
       '';
     };
+    "${config.home.homeDirectory}/.config/scripts/logseq-sync-loop.sh" = {
+        source = ./scripts/logseq-sync-loop.sh;
+      };
   };
 
 
@@ -313,10 +316,9 @@ in
         ExecStart = "${pkgs.onedrive}/bin/onedrive --monitor";
         Restart = "on-failure";
         RestartSec = 3;
-        User = "markus"; # Adjust as needed
       };
       Install = {
-        wantedBy = [ "default.target" ];
+        WantedBy = [ "multi-user.target" ];
       };
     };
     logseq-sync = {
@@ -324,13 +326,12 @@ in
         Description = "Logseq sync service";
       };
       Service = {
-        ExecStart = "${pkgs.bash}/bin/bash ${config.home.sessionVariables.LOGSEQ_DIR}/logseq-sync-loop.sh";
+        ExecStart = "${pkgs.bash}/bin/bash ${config.home.homeDirectory}/.config/scripts/logseq-sync-loop.sh";
         Restart = "on-failure";
         RestartSec = 3;
-        User = "markus"; # Adjust as needed
       };
       Install = {
-        wantedBy = [ "default.target" ];
+        WantedBy = [ "multi-user.target" ];
       };
     };
   };

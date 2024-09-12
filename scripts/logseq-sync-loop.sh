@@ -1,0 +1,1 @@
+/nix/store/gzwb9wq05qrbqf3xf0rzm6zf16knrdfn-home-manager-files/.config/scripts/logseq-sync-loop.sh
