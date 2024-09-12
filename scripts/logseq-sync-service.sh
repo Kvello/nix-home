@@ -33,7 +33,7 @@ while true; do
 		# Push the changes to the remote repository
 		git push origin main
 	    fi
-	    sleep 30
+	    sleep 120
 	done
 
 git pull origin main
