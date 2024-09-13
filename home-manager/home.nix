@@ -76,7 +76,17 @@ in
     libsForQt5.qt5.qtwayland
     libsForQt5.qt5.qtbase
     libsForQt5.qt5.qtx11extras
-];
+    iosevka
+    font-awesome
+    fish
+    pywal
+    noto-fonts-monochrome-emoji
+    font-manager
+    (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
+  ];
+    fonts.fontconfig = {
+      enable = true;
+    };
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
@@ -156,7 +166,56 @@ in
   programs.bash = {
     enable = true;
     enableCompletion = true;
-    bashrcExtra = lib.readFile ./bashrc_extra.sh;
+    bashrcExtra = lib.readFile ../dotfiles/bashrc_extra.sh;
+  };
+  programs.kitty = {
+    enable = true;
+    extraConfig = lib.readFile ../dotfiles/kitty/kitty.conf;
+  };
+  programs.pywal.enable = true;
+  programs.fish = {
+    enable = true;
+    interactiveShellInit = ''
+      set -g fish_color_command ebdbb2 
+      set -g fish_color_error d75f5f
+      set -g tide_character_color afaf00
+      set -g tide_character_color_failure d75f5f
+      set -g tide_left_prompt_items os pwd git
+      set -g tide_left_prompt_frame_enabled true
+      set -g tide_left_prompt_prefix '''
+      set -g tide_left_prompt_suffix 
+      set -g tide_prompt_pad_items true
+      set -g tide_left_prompt_separator_diff_color 
+      set -g tide_left_prompt_separator_same_color 
+      set -g tide_pwd_bg_color 83adad
+      set -g tide_git_bg_color ffaf00
+      set -g tide_git_color_branch 262626
+      set -g tide_git_bg_color_unstable d75f5f
+      set -g tide_git_bg_color_urgent d75f5f
+      set -g tide_os_bg_color ebdbb2
+      set -g tide_pwd_color_dirs ebdbb2
+      set -g tide_pwd_color_anchors ebdbb2
+      '';
+    plugins = [
+      {
+        name ="tide";
+        src = pkgs.fetchFromGitHub {
+          owner = "IlanCosman";
+          repo = "tide";
+          rev = "a34b0c2809f665e854d6813dd4b052c1b32a32b4";
+          sha256 = "09v3qj4w3r8b0nr598gpf503amaba12485v9mx2pwx9idbyj88b7";
+        };
+      }
+      {
+        name="bass";
+        src = pkgs.fetchFromGitHub {
+          owner = "edc";
+          repo = "bass";
+          rev = "7aae6a85c24660422ea3f3f4629bb4a8d30df3ba";
+          sha256 = "03693ywczzr46dgpnbawcfv02v5l143dqlz1fzjbhpwwc2xpr42y";
+        };
+      }
+    ];
   };
   # Enable Sway
   wayland.windowManager.sway = {
