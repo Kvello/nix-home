@@ -11,7 +11,7 @@ if [ ! -d "$LOGSEQ_DIR" ]; then
 fi
 # Navigate to the Logseq directory
 cd "$LOGSEQ_DIR"
-git config pull.rebase true
+git config pull.rebase false
 git pull origin main
 while true; do
 	# Monitor the directory for changes

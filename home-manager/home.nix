@@ -73,7 +73,10 @@ in
     logseq
     inotify-tools
     slack
-  ];
+    libsForQt5.qt5.qtwayland
+    libsForQt5.qt5.qtbase
+    libsForQt5.qt5.qtx11extras
+];
     # # fonts?
     # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
 
@@ -100,6 +103,11 @@ in
         Semester 8
         Semester 7
         Semester 6
+      '';
+    };
+    "${config.home.homeDirectory}/.config/onedrive/config" = {
+      text = ''
+        monitor_interval = "60"
       '';
     };
   };
@@ -352,6 +360,8 @@ in
     };
   };
   systemd.user.systemctlPath = "/usr/bin/systemctl";
+  qt.enable = true;
+  
   # Let Home Manager install and manage itself.
   programs.home-manager.enable = true;
 }
