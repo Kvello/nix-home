@@ -108,6 +108,7 @@ in
     "${config.home.homeDirectory}/.config/onedrive/config" = {
       text = ''
         monitor_interval = "60"
+        monitor_fullscan_freqeuncy = "120"
       '';
     };
   };
