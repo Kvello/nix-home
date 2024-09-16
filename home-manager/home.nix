@@ -389,7 +389,7 @@ in
         RestartSec = 3;
       };
       Install = {
-        WantedBy = [ "multi-user.target" ];
+        WantedBy = [ "default.target" ];
       };
     };
     logseq-sync = {
@@ -402,7 +402,7 @@ in
         RestartSec = 3;
       };
       Install = {
-        WantedBy = [ "multi-user.target" ];
+        WantedBy = [ "default.target" ];
       };
     };
     home-manager-sync = {
