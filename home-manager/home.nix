@@ -118,7 +118,7 @@ in
     "${config.home.homeDirectory}/.config/onedrive/config" = {
       text = ''
         monitor_interval = "60"
-        monitor_fullscan_freqeuncy = "120"
+        monitor_fullscan_frequency= "120"
       '';
     };
   };
@@ -397,7 +397,7 @@ in
         Description = "Logseq sync service";
       };
       Service = {
-        ExecStart = "${pkgs.bash}/bin/bash ${config.home.homeDirectory}/.config/scripts/logseq-sync-service.sh";
+        ExecStart ="${pkgs.nix}/bin/nix-shell -p git inotify-tools --command ${config.home.homeDirectory}/.config/scripts/logseq-sync-service.sh";
         Restart = "on-failure";
         RestartSec = 3;
       };
