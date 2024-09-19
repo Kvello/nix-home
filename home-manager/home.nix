@@ -82,6 +82,7 @@ in
     pywal
     noto-fonts-monochrome-emoji
     font-manager
+    zotero
     (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
     fonts.fontconfig = {
@@ -420,6 +421,7 @@ in
     };
   };
   systemd.user.systemctlPath = "/usr/bin/systemctl";
+  systemd.user.sessionVariables = config.home.sessionVariables;
   qt.enable = true;
   
   # Let Home Manager install and manage itself.
