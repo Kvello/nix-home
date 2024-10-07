@@ -6,9 +6,14 @@ let
     ref = "main";
   }) {};
 
+
   # Create a wrapper script for launching Kitty with nixGL
   kitty-wrapped = pkgs.writeShellScriptBin "kitty-wrapped" ''
     ${nixGL}/bin/nixGL ${pkgs.kitty}/bin/kitty "$@"
+  '';
+  # Create a wrapper script for launching Sway with nixGL
+  sway-wrapped = pkgs.writeShellScriptBin "sway-wrapped" ''
+    ${nixGL}/bin/nixGL ${pkgs.sway}/bin/sway "$@"
   '';
 in
 {
@@ -34,9 +39,6 @@ in
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
     EDITOR = "vim";
   };
-  home.sessionPath = [
-    "/usr/lib/locale"
-  ];
   home.packages = with pkgs; [
     git
     vim
@@ -83,6 +85,7 @@ in
     noto-fonts-monochrome-emoji
     font-manager
     zotero
+    arandr
     (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
     fonts.fontconfig = {
@@ -335,6 +338,7 @@ in
       pkgs.vscode-extensions.arrterian.nix-env-selector
       pkgs.vscode-extensions.mhutchie.git-graph
       pkgs.vscode-extensions.pkief.material-icon-theme
+      pkgs.vscode-extensions.james-yu.latex-workshop 
     ];
     userSettings = {
       "files.autoSave" =  "onFocusChange";
@@ -416,9 +420,22 @@ in
         RestartSec = 3;
       };
       Install = {
-        WantedBy = [ "multi-user.target" ];
+        WantedBy = [ "default.target" ];
       };
     };
+  screen-setup = {
+      Unit = {
+        Description = "Screen setup";
+      };
+      Service = {
+        ExecStart = "${pkgs.bash}/bin/bash ${config.home.homeDirectory}/.screenlayout/default.sh";
+        Restart = "on-failure";
+        RestartSec = 3;
+      };
+      Install = {
+        WantedBy = [ "graphical-session.target" ];
+      };
+  };
   };
   systemd.user.systemctlPath = "/usr/bin/systemctl";
   systemd.user.sessionVariables = config.home.sessionVariables;
