@@ -1,0 +1,13 @@
+# Ignore everything by default
+*
+
+# Do not ignore directories, so .nix files within them are included
+!*/
+!.gitignore
+# Unignore all relevant .nix files
+!home-manager/**
+!nixpkgs/**
+!scripts/**
+!dotfiles/**
+!README.md
+!LICENSE
