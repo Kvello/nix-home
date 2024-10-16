@@ -15,6 +15,24 @@ let
   sway-wrapped = pkgs.writeShellScriptBin "sway-wrapped" ''
     ${nixGL}/bin/nixGL ${pkgs.sway}/bin/sway "$@"
   '';
+  vscode-utils = pkgs.vscode-utils;
+
+  mathworks.language-matlab = vscode-utils.buildVscodeMarketplaceExtension {
+    mktplcRef = {
+      name = "language-matlab";
+      publisher = "MathWorks";
+      version = "1.2.0";
+      hash = "sha256-mJE8x+KACHxtU/+Ls2fdX8WY9mkersmcNSmzS+QZ4zU=";
+    };
+    meta = {
+      changelog = "https://marketplace.visualstudio.com/items/MathWorks.language-matlab/changelog";
+      description = "MATLAB extension for Visual Studio Code";
+      downloadPage = "https://marketplace.visualstudio.com/items?itemName=MathWorks.language-matlab";
+      homepage = "https://github.com/mathworks/MATLAB-extension-for-vscode";
+      license = lib.licenses.mit;
+      maintainers = [];
+    };
+  };
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -339,6 +357,7 @@ in
       pkgs.vscode-extensions.mhutchie.git-graph
       pkgs.vscode-extensions.pkief.material-icon-theme
       pkgs.vscode-extensions.james-yu.latex-workshop 
+      mathworks.language-matlab 
     ];
     userSettings = {
       "files.autoSave" =  "onFocusChange";
@@ -347,6 +366,7 @@ in
       "material-icon-theme.files.associations" =  {
     
       };
+      "MATLAB.installPath"= "/usr/local/MATLAB/R2024a"; #OBS! Not managed with home-manager(yet)
 
       "editor.fontFamily" =  "JetBrains Mono, Consolas, 'Courier New', monospace";
       "editor.fontSize" =  14;
@@ -356,12 +376,12 @@ in
       "terminal.integrated.defaultProfile.linux" = "bash";
       "terminal.integrated.profiles.linux" = {
         bash = {
-          path = "/bin/bash";
+          path = "${pkgs.bashInteractive}/bin/bash";
           args = ["-l"];
         };
       };
       "terminal.integrated.env.linux" = {
-        BASH_ENV = "\${HOME}/.bashrc";
+        BASH_ENV = "~/.bashrc";
       };
     };
   };
