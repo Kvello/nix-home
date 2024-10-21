@@ -357,6 +357,7 @@ in
       pkgs.vscode-extensions.mhutchie.git-graph
       pkgs.vscode-extensions.pkief.material-icon-theme
       pkgs.vscode-extensions.james-yu.latex-workshop 
+      pkgs.vscode-extensions.ms-vscode-remote.remote-ssh
       mathworks.language-matlab 
     ];
     userSettings = {
