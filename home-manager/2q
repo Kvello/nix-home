@@ -387,41 +387,21 @@ in
     };
     keybindings = [
       {
-        key = "tab";
-        command = "selectNextSuggestion";
-        when = "suggestWidgetVisible";
-      }
-      {
-        key = "shift+tab";
-        command = "selectPrevSuggestion";
-        when = "suggestWidgetVisible";
-      }
-      {
         key = "enter";
         command = "acceptSelectedSuggestion";
         when = "suggestWidgetVisible && !inlineSuggestionVisible";
       }
       {
-        key = "shift+enter";
-        command = "type";
-        args = ''{ text: \n}'';
-        when = "suggestWidgetVisible";
-      } 
-      {
-        key = "tab";
-        command = "-acceptSelectedSuggestion";
-        when = "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus";
+        key = "right";
+        command = "editor.action.inlineSuggest.accept";
+        when = "inlineSuggestionVisible";
       }
       {
-        key = "right";
-        command= "editor.action.inlineEdit.accept";
-        when= "cursorAtInlineEdit && inlineEditVisible && !editorReadonly";
-       }
-       {
-         key= "tab";
-         command= "-editor.action.inlineEdit.accept";
-         when= "cursorAtInlineEdit && inlineEditVisible && !editorReadonly";
-       }
+        key = "shift+enter";
+        command = "type";
+        args = { "text": "\n" }
+        when = "suggestWidgetVisible"
+      } 
     ];
   };
   programs.spotify-player = {
