@@ -346,6 +346,7 @@ in
     enable = true;
     extensions = with pkgs.vscode-extensions; [
       ms-vscode.cpptools-extension-pack
+      ms-vscode.cmake-tools
       ms-python.python
       vscodevim.vim
       njpwerner.autodocstring
