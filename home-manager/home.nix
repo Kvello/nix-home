@@ -345,19 +345,20 @@ in
   programs.vscode = {
     enable = true;
     extensions = with pkgs.vscode-extensions; [
-      pkgs.vscode-extensions.ms-python.python
-      pkgs.vscode-extensions.vscodevim.vim
-      pkgs.vscode-extensions.njpwerner.autodocstring
-      pkgs.vscode-extensions.github.copilot
-      pkgs.vscode-extensions.github.copilot-chat
-      pkgs.vscode-extensions.jdinhlife.gruvbox
-      pkgs.vscode-extensions.jnoortheen.nix-ide
-      pkgs.vscode-extensions.mkhl.direnv
-      pkgs.vscode-extensions.arrterian.nix-env-selector
-      pkgs.vscode-extensions.mhutchie.git-graph
-      pkgs.vscode-extensions.pkief.material-icon-theme
-      pkgs.vscode-extensions.james-yu.latex-workshop 
-      pkgs.vscode-extensions.ms-vscode-remote.remote-ssh
+      ms-vscode.cpptools-extension-pack
+      ms-python.python
+      vscodevim.vim
+      njpwerner.autodocstring
+      github.copilot
+      github.copilot-chat
+      jdinhlife.gruvbox
+      jnoortheen.nix-ide
+      mkhl.direnv
+      arrterian.nix-env-selector
+      mhutchie.git-graph
+      pkief.material-icon-theme
+      james-yu.latex-workshop 
+      ms-vscode-remote.remote-ssh
       mathworks.language-matlab 
     ];
     userSettings = {
