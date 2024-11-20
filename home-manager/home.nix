@@ -104,6 +104,7 @@ in
     font-manager
     zotero
     arandr
+    gnuplot
     (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
     fonts.fontconfig = {
@@ -371,36 +372,7 @@ in
     
       };
       "MATLAB.installPath"= "/usr/local/MATLAB/R2024a"; #OBS! Not managed with home-manager(yet)
-      "latex-workshop.latex.tools"= [
-	{
-            name = "mkdir";
-            command= "mkdir";
-            args= [
-		"-p"
-		"build"
-            ];
-	}
-	{
-            name = "pdflatex";
-            command= "pdflatex";
-            args= [
-                "-synctex=1"
-                "-interactions=nonstopmode"
-                "-file-line-error"
-                "-output-directory=build"
-                "%DOC%"
-            ];
-	}
-      ];
-      "latex-workshop.latex.recipes"= [
-          {
-              name="pdflatex";
-              tools=[
-		"mkdir"
-		"pdflatex"
-              ];
-          }
-      ];
+      "latex-workshop.latex.outDir" = "build";
       "editor.fontFamily" =  "JetBrains Mono, Consolas, 'Courier New', monospace";
       "editor.fontSize" =  14;
       "editor.fontWeight" = "normal";
