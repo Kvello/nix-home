@@ -363,6 +363,7 @@ in
       james-yu.latex-workshop 
       ms-vscode-remote.remote-ssh
       mathworks.language-matlab 
+      streetsidesoftware.code-spell-checker
     ];
     userSettings = {
       "files.autoSave" =  "onFocusChange";
@@ -373,6 +374,74 @@ in
       };
       "MATLAB.installPath"= "/usr/local/MATLAB/R2024a"; #OBS! Not managed with home-manager(yet)
       "latex-workshop.latex.outDir" = "build";
+      "latex-workshop.latex.recipes" = [
+        {
+          name = "pdflatex";
+          tools = [
+            "pdflatex"
+          ];
+        }
+        {
+          name = "latexmk";
+          tools = [
+            "latexmk"
+          ];
+        }
+        {
+          name = "pdflatex -> biber -> makeglossaries -> pdflatex x 2";
+          tools = [
+            "pdflatex"
+            "biber"
+            "makeglossaries"
+            "pdflatex"
+            "pdflatex"
+          ];
+        }
+      ];
+      "latex-workshop.view.pdf.viewer" = "tab";
+      "latex-workshop.latex.tools" = [
+        {
+          name = "latexmk";
+          command = "latexmk";
+          args = [
+            "-synctex=1"
+            "-interaction=nonstopmode"
+            "-file-line-error"
+            "-output-directory=build"
+            "-pdf"
+            "%DOC%"
+          ];
+        }
+        {
+          name = "pdflatex";
+          command = "pdflatex";
+          args = [
+            "-synctex=1"
+            "-interaction=nonstopmode"
+            "-output-directory=build"
+            "-file-line-error"
+            "%DOC%"
+          ];
+        }
+        {
+          name = "biber";
+          command = "biber";
+          args = [
+            "build/%DOCFILE%"
+          ];
+        }
+        {
+          name = "makeglossaries";
+          command = "makeglossaries";
+          args = [
+            "-d"
+            "build"
+            "%DOCFILE%"
+          ];
+        }
+      ];
+      "cSpell.enabledFileTypes" = ["plaintext" "markdown" "latex"];
+      "cSpell.language" = "en";
       "editor.fontFamily" =  "JetBrains Mono, Consolas, 'Courier New', monospace";
       "editor.fontSize" =  14;
       "editor.fontWeight" = "normal";
