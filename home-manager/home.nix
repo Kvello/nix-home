@@ -122,6 +122,7 @@ in
     vulkan-tools
     vulkan-validation-layers
     mesa
+    pdftk
     (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
     fonts.fontconfig = {
