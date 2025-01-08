@@ -107,6 +107,7 @@ in
     gnuplot
     ganttproject-bin
     zed-editor
+    neofetch
     (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
     fonts.fontconfig = {
