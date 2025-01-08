@@ -105,6 +105,8 @@ in
     zotero
     arandr
     gnuplot
+    ganttproject-bin
+    zed-editor
     (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
     fonts.fontconfig = {
@@ -388,11 +390,12 @@ in
           ];
         }
         {
-          name = "pdflatex -> biber -> makeglossaries -> pdflatex x 2";
+          name = "pdflatex -> biber -> makeglossaries-> ->makeindex->pdflatex x 2";
           tools = [
             "pdflatex"
             "biber"
             "makeglossaries"
+            "makeindex"
             "pdflatex"
             "pdflatex"
           ];
@@ -437,6 +440,17 @@ in
             "-d"
             "build"
             "%DOCFILE%"
+          ];
+        }
+        {
+          name = "makeindex";
+          command = "makeindex";
+          args = [
+            "build/%DOCFILE%.nlo"
+            "-s"
+            "nomencl.ist"
+            "-o"
+            "build/%DOCFILE%.nls"
           ];
         }
       ];
