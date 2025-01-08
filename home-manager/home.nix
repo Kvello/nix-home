@@ -33,6 +33,14 @@ let
       maintainers = [];
     };
   };
+  customOverlay = final: prev: {
+    mesa = prev.mesa.overrideAttrs (oldAttrs: rec {
+      # Adding meson flags
+      mesonFlags = oldAttrs.mesonFlags ++ [
+        "-D vulkan-layers=device-select,overlay"
+      ];
+    });
+  };
 in
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -57,6 +65,9 @@ in
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
     EDITOR = "vim";
   };
+  nixpkgs.overlays = [
+    customOverlay
+  ];
   home.packages = with pkgs; [
     git
     vim
@@ -108,6 +119,9 @@ in
     ganttproject-bin
     zed-editor
     neofetch
+    vulkan-tools
+    vulkan-validation-layers
+    mesa
     (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
     fonts.fontconfig = {
