@@ -2,7 +2,6 @@
 *
 
 # Do not ignore directories, so .nix files within them are included
-!*/
 !.gitignore
 # Unignore all relevant .nix files
 !home-manager/**
