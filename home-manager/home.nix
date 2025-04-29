@@ -91,7 +91,6 @@ in
     bitwarden-desktop
     jetbrains-mono
     pkgs.python312
-    pyenv
     pkgs.python312Packages.pip
     pkgs.python312Packages.virtualenv
     direnv
@@ -123,6 +122,7 @@ in
     vulkan-validation-layers
     mesa
     pdftk
+    gnumake
     (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
   ];
     fonts.fontconfig = {
@@ -529,11 +529,6 @@ in
   };
   programs.spotify-player = {
     enable = true;
-  };
-  programs.pyenv = {
-    enable = true;
-    enableBashIntegration = true;
-    enableFishIntegration = true;
   };
   programs.direnv = {
     enable = true;
