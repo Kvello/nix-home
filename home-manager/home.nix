@@ -87,7 +87,6 @@ in
     libva
     libva-utils
     onedrive
-    vscode 
     spotify
     bitwarden-desktop
     jetbrains-mono
