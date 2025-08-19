@@ -74,6 +74,7 @@ in
     wofi
     kitty
     texliveFull
+    pyenv
     grim  # screenshot tool
     slurp  # screen area selection tool
     wl-clipboard  # clipboard tool
@@ -358,171 +359,173 @@ in
       }
     '';
   };
-  programs.vscode.profiles.default = {
+  programs.vscode = {
     enable = true;
-    extensions = with pkgs.vscode-extensions; [
-      ms-vscode.cpptools
-      ms-vscode.cmake-tools
-      twxs.cmake
-      ms-python.python
-      vscodevim.vim
-      njpwerner.autodocstring
-      github.copilot
-      github.copilot-chat
-      jdinhlife.gruvbox
-      jnoortheen.nix-ide
-      mkhl.direnv
-      arrterian.nix-env-selector
-      mhutchie.git-graph
-      pkief.material-icon-theme
-      james-yu.latex-workshop 
-      ms-vscode-remote.remote-ssh
-      mathworks.language-matlab 
-      streetsidesoftware.code-spell-checker
-    ];
-    userSettings = {
-      "files.autoSave" =  "onFocusChange";
-      "workbench.colorTheme" = "Gruvbox Dark Soft";
-      "workbench.iconTheme" = "material-icon-theme";
-      "material-icon-theme.files.associations" =  {
-    
-      };
-      "MATLAB.installPath"= "/usr/local/MATLAB/R2024a"; #OBS! Not managed with home-manager(yet)
-      "latex-workshop.latex.outDir" = "build";
-      "latex-workshop.latex.recipes" = [
-        {
-          name = "pdflatex";
-          tools = [
-            "pdflatex"
-          ];
-        }
-        {
-          name = "latexmk";
-          tools = [
-            "latexmk"
-          ];
-        }
-        {
-          name = "pdflatex -> biber -> makeglossaries-> ->makeindex->pdflatex x 2";
-          tools = [
-            "pdflatex"
-            "biber"
-            "makeglossaries"
-            "makeindex"
-            "pdflatex"
-            "pdflatex"
-          ];
-        }
+    profiles.default = {
+      extensions = with pkgs.vscode-extensions; [
+        ms-vscode.cpptools
+        ms-vscode.cmake-tools
+        twxs.cmake
+        ms-python.python
+        vscodevim.vim
+        njpwerner.autodocstring
+        github.copilot
+        github.copilot-chat
+        jdinhlife.gruvbox
+        jnoortheen.nix-ide
+        mkhl.direnv
+        arrterian.nix-env-selector
+        mhutchie.git-graph
+        pkief.material-icon-theme
+        james-yu.latex-workshop 
+        ms-vscode-remote.remote-ssh
+        mathworks.language-matlab 
+        streetsidesoftware.code-spell-checker
       ];
-      "latex-workshop.view.pdf.viewer" = "tab";
-      "latex-workshop.latex.tools" = [
-        {
-          name = "latexmk";
-          command = "latexmk";
-          args = [
-            "-synctex=1"
-            "-interaction=nonstopmode"
-            "-file-line-error"
-            "-output-directory=build"
-            "-pdf"
-            "%DOC%"
-          ];
-        }
-        {
-          name = "pdflatex";
-          command = "pdflatex";
-          args = [
-            "-synctex=1"
-            "-interaction=nonstopmode"
-            "-output-directory=build"
-            "-file-line-error"
-            "%DOC%"
-          ];
-        }
-        {
-          name = "biber";
-          command = "biber";
-          args = [
-            "build/%DOCFILE%"
-          ];
-        }
-        {
-          name = "makeglossaries";
-          command = "makeglossaries";
-          args = [
-            "-d"
-            "build"
-            "%DOCFILE%"
-          ];
-        }
-        {
-          name = "makeindex";
-          command = "makeindex";
-          args = [
-            "build/%DOCFILE%.nlo"
-            "-s"
-            "nomencl.ist"
-            "-o"
-            "build/%DOCFILE%.nls"
-          ];
-        }
-      ];
-      "cSpell.enabledFileTypes" = ["plaintext" "markdown" "latex"];
-      "cSpell.language" = "en";
-      "editor.fontFamily" =  "JetBrains Mono, Consolas, 'Courier New', monospace";
-      "editor.fontSize" =  14;
-      "editor.fontWeight" = "normal";
-      "editor.lineHeight" = 22;
-      "editor.letterSpacing" =  0.5;
-      "terminal.integrated.defaultProfile.linux" = "bash";
-      "terminal.integrated.profiles.linux" = {
-        bash = {
-          path = "${pkgs.bashInteractive}/bin/bash";
-          args = ["-l"];
+      userSettings = {
+        "files.autoSave" =  "onFocusChange";
+        "workbench.colorTheme" = "Gruvbox Dark Soft";
+        "workbench.iconTheme" = "material-icon-theme";
+        "material-icon-theme.files.associations" =  {
+      
+        };
+        "MATLAB.installPath"= "/usr/local/MATLAB/R2024a"; #OBS! Not managed with home-manager(yet)
+        "latex-workshop.latex.outDir" = "build";
+        "latex-workshop.latex.recipes" = [
+          {
+            name = "pdflatex";
+            tools = [
+              "pdflatex"
+            ];
+          }
+          {
+            name = "latexmk";
+            tools = [
+              "latexmk"
+            ];
+          }
+          {
+            name = "pdflatex -> biber -> makeglossaries-> ->makeindex->pdflatex x 2";
+            tools = [
+              "pdflatex"
+              "biber"
+              "makeglossaries"
+              "makeindex"
+              "pdflatex"
+              "pdflatex"
+            ];
+          }
+        ];
+        "latex-workshop.view.pdf.viewer" = "tab";
+        "latex-workshop.latex.tools" = [
+          {
+            name = "latexmk";
+            command = "latexmk";
+            args = [
+              "-synctex=1"
+              "-interaction=nonstopmode"
+              "-file-line-error"
+              "-output-directory=build"
+              "-pdf"
+              "%DOC%"
+            ];
+          }
+          {
+            name = "pdflatex";
+            command = "pdflatex";
+            args = [
+              "-synctex=1"
+              "-interaction=nonstopmode"
+              "-output-directory=build"
+              "-file-line-error"
+              "%DOC%"
+            ];
+          }
+          {
+            name = "biber";
+            command = "biber";
+            args = [
+              "build/%DOCFILE%"
+            ];
+          }
+          {
+            name = "makeglossaries";
+            command = "makeglossaries";
+            args = [
+              "-d"
+              "build"
+              "%DOCFILE%"
+            ];
+          }
+          {
+            name = "makeindex";
+            command = "makeindex";
+            args = [
+              "build/%DOCFILE%.nlo"
+              "-s"
+              "nomencl.ist"
+              "-o"
+              "build/%DOCFILE%.nls"
+            ];
+          }
+        ];
+        "cSpell.enabledFileTypes" = ["plaintext" "markdown" "latex"];
+        "cSpell.language" = "en";
+        "editor.fontFamily" =  "JetBrains Mono, Consolas, 'Courier New', monospace";
+        "editor.fontSize" =  14;
+        "editor.fontWeight" = "normal";
+        "editor.lineHeight" = 22;
+        "editor.letterSpacing" =  0.5;
+        "terminal.integrated.defaultProfile.linux" = "bash";
+        "terminal.integrated.profiles.linux" = {
+          bash = {
+            path = "${pkgs.bashInteractive}/bin/bash";
+            args = ["-l"];
+          };
+        };
+        "terminal.integrated.env.linux" = {
+          BASH_ENV = "~/.bashrc";
         };
       };
-      "terminal.integrated.env.linux" = {
-        BASH_ENV = "~/.bashrc";
-      };
+      keybindings = [
+        {
+          key = "tab";
+          command = "selectNextSuggestion";
+          when = "suggestWidgetVisible";
+        }
+        {
+          key = "shift+tab";
+          command = "selectPrevSuggestion";
+          when = "suggestWidgetVisible";
+        }
+        {
+          key = "enter";
+          command = "acceptSelectedSuggestion";
+          when = "suggestWidgetVisible && !inlineSuggestionVisible";
+        }
+        {
+          key = "shift+enter";
+          command = "type";
+          args = ''{ text: \n}'';
+          when = "suggestWidgetVisible";
+        } 
+        {
+          key = "tab";
+          command = "-acceptSelectedSuggestion";
+          when = "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus";
+        }
+        {
+          key = "right";
+          command= "editor.action.inlineEdit.accept";
+          when= "cursorAtInlineEdit && inlineEditVisible && !editorReadonly";
+         }
+         {
+           key= "tab";
+           command= "-editor.action.inlineEdit.accept";
+           when= "cursorAtInlineEdit && inlineEditVisible && !editorReadonly";
+         }
+      ];
     };
-    keybindings = [
-      {
-        key = "tab";
-        command = "selectNextSuggestion";
-        when = "suggestWidgetVisible";
-      }
-      {
-        key = "shift+tab";
-        command = "selectPrevSuggestion";
-        when = "suggestWidgetVisible";
-      }
-      {
-        key = "enter";
-        command = "acceptSelectedSuggestion";
-        when = "suggestWidgetVisible && !inlineSuggestionVisible";
-      }
-      {
-        key = "shift+enter";
-        command = "type";
-        args = ''{ text: \n}'';
-        when = "suggestWidgetVisible";
-      } 
-      {
-        key = "tab";
-        command = "-acceptSelectedSuggestion";
-        when = "suggestWidgetHasFocusedSuggestion && suggestWidgetVisible && textInputFocus";
-      }
-      {
-        key = "right";
-        command= "editor.action.inlineEdit.accept";
-        when= "cursorAtInlineEdit && inlineEditVisible && !editorReadonly";
-       }
-       {
-         key= "tab";
-         command= "-editor.action.inlineEdit.accept";
-         when= "cursorAtInlineEdit && inlineEditVisible && !editorReadonly";
-       }
-    ];
   };
   programs.spotify-player = {
     enable = true;
