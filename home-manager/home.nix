@@ -360,7 +360,7 @@ in
     '';
   };
   programs.vscode = {
-    enable = true;
+    enable = false;
     profiles.default = {
       extensions = with pkgs.vscode-extensions; [
         ms-vscode.cpptools
