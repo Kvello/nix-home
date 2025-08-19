@@ -55,7 +55,7 @@ in
   # You should not change this value, even if you update Home Manager. If you do
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
-  home.stateVersion = "24.05"; # Please read the comment before changing.
+  home.stateVersion = "25.05"; # Please read the comment before changing.
   home.language = {
     base = "en_US.UTF-8";
   };
@@ -66,7 +66,7 @@ in
     EDITOR = "vim";
   };
   nixpkgs.overlays = [
-    customOverlay
+    # customOverlay
   ];
   home.packages = with pkgs; [
     git
@@ -123,14 +123,11 @@ in
     mesa
     pdftk
     gnumake
-    (pkgs.nerdfonts.override { fonts = [ "Meslo" ]; })
+    (pkgs.nerd-fonts.meslo-lg)
   ];
     fonts.fontconfig = {
       enable = true;
     };
-    # # fonts?
-    # (pkgs.nerdfonts.override { fonts = [ "FantasqueSansMono" ]; })
-
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -361,7 +358,7 @@ in
       }
     '';
   };
-  programs.vscode = {
+  programs.vscode.profiles.default = {
     enable = true;
     extensions = with pkgs.vscode-extensions; [
       ms-vscode.cpptools
