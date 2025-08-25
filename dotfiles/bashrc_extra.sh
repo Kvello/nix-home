@@ -97,3 +97,6 @@ eval "$(pyenv init - bash)"
 # the following to ~/.bashrc:
 
 eval "$(pyenv virtualenv-init -)"
+
+# Set terminal theme
+wal --theme base16-gruvbox-soft
