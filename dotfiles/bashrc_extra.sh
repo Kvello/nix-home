@@ -100,3 +100,5 @@ eval "$(pyenv virtualenv-init -)"
 
 # Set terminal theme
 wal --theme base16-gruvbox-soft
+# Start fish
+fish
