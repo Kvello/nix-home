@@ -124,6 +124,8 @@ in
     mesa
     pdftk
     gnumake
+    libgcc
+    gcc
     (pkgs.nerd-fonts.meslo-lg)
   ];
     fonts.fontconfig = {
