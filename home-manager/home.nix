@@ -126,6 +126,7 @@ in
     gnumake
     libgcc
     gcc
+    doxygen
     (pkgs.nerd-fonts.meslo-lg)
   ];
     fonts.fontconfig = {
