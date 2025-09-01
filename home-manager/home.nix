@@ -127,6 +127,7 @@ in
     libgcc
     gcc
     doxygen
+    usbutils
     (pkgs.nerd-fonts.meslo-lg)
   ];
     fonts.fontconfig = {
