@@ -128,6 +128,7 @@ in
     gcc
     doxygen
     usbutils
+    socat 
     (pkgs.nerd-fonts.meslo-lg)
   ];
     fonts.fontconfig = {
