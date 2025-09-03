@@ -98,7 +98,10 @@ eval "$(pyenv init - bash)"
 
 eval "$(pyenv virtualenv-init -)"
 
-# Set terminal theme
-wal --theme base16-gruvbox-soft
-# Start fish
-fish
+if [[ $- == *i* ]]; then
+    wal --theme base16-gruvbox-soft
+    # Start fish only if this is the main interactive shell
+    if [ -z "$FISH" ] && [ -z "$INSIDE_EMACS" ] && [[ -z "$IN_NIX_SHELL" ]]; then
+        exec fish
+    fi
+fi

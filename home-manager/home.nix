@@ -64,6 +64,7 @@ in
     LC_ALL = "en_US.UTF-8";
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
     EDITOR = "vim";
+    SHELL = "${pkgs.fish}";
   };
   nixpkgs.overlays = [
     # customOverlay
@@ -166,6 +167,7 @@ in
       '';
     };
   };
+  home.shell.enableFishIntegration=true;
 
 
   # Home Manager can also manage your environment variables through
