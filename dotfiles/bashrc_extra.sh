@@ -82,26 +82,19 @@ fi
 # this, if it's already enabled in /etc/bash.bashrc and /etc/profile
 # sources /etc/bash.bashrc).
 
-# Load pyenv automatically by appending
-# the following to 
-# ~/.bash_profile if it exists, otherwise ~/.profile (for login shells)
-# and ~/.bashrc (for interactive shells) :
-
-export PYENV_ROOT="$HOME/.pyenv"
-[[ -d $PYENV_ROOT/bin ]] && export PATH="$PYENV_ROOT/bin:$PATH"
-eval "$(pyenv init - bash)"
-
-# Restart your shell for the changes to take effect.
-
-# Load pyenv-virtualenv automatically by adding
-# the following to ~/.bashrc:
-
-eval "$(pyenv virtualenv-init -)"
+if [[ $- == *i* ]]; then
+    export PYENV_ROOT="$HOME/.pyenv"
+    if [[ -d $PYENV_ROOT/bin ]]; then
+        export PATH="$PYENV_ROOT/bin:$PATH"
+    fi
+    eval "$(pyenv init - bash)"
+    eval "$(pyenv virtualenv-init -)"
+fi
 
 if [[ $- == *i* ]]; then
     wal --theme base16-gruvbox-soft
     # Start fish only if this is the main interactive shell, and not a nix-shell
-    if [ -z "$FISH" ] && [ -z "$INSIDE_EMACS" ] && [ -z "$IN_NIX_SHELL" ]; then
+    if [ -z "$IN_NIX_SHELL" ]; then
         fish
     fi
 fi
