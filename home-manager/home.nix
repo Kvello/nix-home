@@ -64,7 +64,6 @@ in
     LC_ALL = "en_US.UTF-8";
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
     EDITOR = "vim";
-    SHELL = "${pkgs.fish}";
   };
   nixpkgs.overlays = [
     # customOverlay
@@ -131,6 +130,8 @@ in
     usbutils
     socat 
     (pkgs.nerd-fonts.meslo-lg)
+    gdb
+    nixd
   ];
     fonts.fontconfig = {
       enable = true;
