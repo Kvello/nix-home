@@ -131,6 +131,7 @@ in
     (pkgs.nerd-fonts.meslo-lg)
     gdb
     nixd
+    exercism
   ];
     fonts.fontconfig = {
       enable = true;
