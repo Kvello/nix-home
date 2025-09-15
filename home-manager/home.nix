@@ -70,7 +70,6 @@ in
   ];
   home.packages = with pkgs; [
     git
-    vim
     wofi
     kitty
     texliveFull
@@ -214,6 +213,20 @@ in
     enable = true;
     enableCompletion = true;
     bashrcExtra = lib.readFile ../dotfiles/bashrc_extra.sh;
+  };
+  programs.vim = {
+    enable=true;
+    extraConfig =''
+      set tabstop=4
+      set softtabstop=4
+      set shiftwidth=4
+      set expandtab
+      set nowrap
+      augroup myCSettings
+        autocmd!
+        autocmd FileType c setlocal shiftwidth=4 tabstop=4 softtabstop=4 expandtab
+      augroup END
+    '';
   };
   programs.kitty = {
     enable = true;
