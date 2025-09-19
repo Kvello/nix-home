@@ -132,6 +132,7 @@ in
     gdb
     nixd
     exercism
+    mamba-cpp
   ];
     fonts.fontconfig = {
       enable = true;
