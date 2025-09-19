@@ -92,9 +92,9 @@ if [[ $- == *i* ]]; then
 fi
 
 if [[ $- == *i* ]]; then
-    wal --theme base16-gruvbox-soft
     # Start fish only if this is the main interactive shell, and not a nix-shell
     if [ -z "$IN_NIX_SHELL" ]; then
+        wal --theme base16-gruvbox-soft
         fish
     fi
 fi
