@@ -64,6 +64,7 @@ in
     LC_ALL = "en_US.UTF-8";
     LOCALE_ARCHIVE = "${pkgs.glibcLocales}/lib/locale/locale-archive";
     EDITOR = "vim";
+    MAMBA_ROOT_PREFIX= "${config.home.homeDirectory}/.mamba";
   };
   nixpkgs.overlays = [
     # customOverlay
@@ -238,6 +239,14 @@ in
   programs.pyenv.enable = true;
   programs.fish = {
     enable = true;
+    shellInit = ''
+      # >>> mamba initialize >>>
+      # !! Contents within this block are managed by 'mamba shell init' !!
+      set -gx MAMBA_EXE "${pkgs.mamba}/bin/mamba"
+      set -gx MAMBA_ROOT_PREFIX "${config.home.homeDirectory}/.mamba"
+      $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
+      # <<< mamba initialize <<<
+    '';
     interactiveShellInit = "
       # Basic colors
       set -U fish_color_command ebdbb2 
