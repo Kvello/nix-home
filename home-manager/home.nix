@@ -242,9 +242,10 @@ in
     shellInit = ''
       # >>> mamba initialize >>>
       # !! Contents within this block are managed by 'mamba shell init' !!
-      set -gx MAMBA_EXE "${pkgs.mamba}/bin/mamba"
+      set -gx MAMBA_EXE "${pkgs.mamba-cpp}/bin/mamba"
       set -gx MAMBA_ROOT_PREFIX "${config.home.homeDirectory}/.mamba"
       $MAMBA_EXE shell hook --shell fish --root-prefix $MAMBA_ROOT_PREFIX | source
+      alias mamba micromamba
       # <<< mamba initialize <<<
     '';
     interactiveShellInit = "
