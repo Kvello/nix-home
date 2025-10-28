@@ -109,7 +109,6 @@ in
     libsForQt5.qt5.qtx11extras
     iosevka
     font-awesome
-    fish
     pywal
     noto-fonts-monochrome-emoji
     font-manager
