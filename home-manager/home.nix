@@ -134,6 +134,7 @@ in
     mamba-cpp
     javaPackages.compiler.openjdk11-bootstrap
     net-tools
+    plantuml
   ];
     fonts.fontconfig = {
       enable = true;
