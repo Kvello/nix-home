@@ -91,9 +91,10 @@ in
     spotify
     bitwarden-desktop
     jetbrains-mono
-    pkgs.python312
-    pkgs.python312Packages.pip
-    pkgs.python312Packages.virtualenv
+    python312
+    python312Packages.pip
+    python312Packages.virtualenv
+    python312Packages.ipython
     direnv
     sway
     swaylock
@@ -103,7 +104,6 @@ in
     firefox
     logseq
     inotify-tools
-    slack
     libsForQt5.qt5.qtwayland
     libsForQt5.qt5.qtbase
     libsForQt5.qt5.qtx11extras
@@ -116,7 +116,6 @@ in
     arandr
     gnuplot
     ganttproject-bin
-    zed-editor
     neofetch
     vulkan-tools
     vulkan-validation-layers
@@ -133,6 +132,8 @@ in
     nixd
     exercism
     mamba-cpp
+    javaPackages.compiler.openjdk11-bootstrap
+    net-tools
   ];
     fonts.fontconfig = {
       enable = true;
@@ -200,12 +201,12 @@ in
   programs.git = {
     enable = true;
     package = pkgs.git;
-    userName = "Kvello";
-    userEmail = "markus.kv1@gmail.com";
-    extraConfig = {
+    settings = {
+      user.name = "Kvello";
+      user.email = "markus.kv1@gmail.com";
       core = {
-        editor = "vim";
-      };
+          editor = "vim";
+        };
       init = {
         defaultBranch = "main";
       };
@@ -248,6 +249,8 @@ in
       # <<< mamba initialize <<<
     '';
     interactiveShellInit = "
+      # Vi mode
+      set -g fish_key_bindings fish_vi_key_bindings
       # Basic colors
       set -U fish_color_command ebdbb2 
       set -U fish_color_error d75f5f
