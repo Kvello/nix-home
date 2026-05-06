@@ -98,3 +98,4 @@ if [[ $- == *i* ]]; then
         fish
     fi
 fi
+set -o vi 2>/dev/null
