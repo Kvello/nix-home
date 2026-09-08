@@ -1,5 +1,8 @@
 { config, pkgs,lib, ... }:
 let
+  nixpkgs.config.permittedInsecurePackages = [
+  "electron-39.8.10"
+  ];
   # Fetch nixGL
   nixGL = import (lib.fetchGit {
     url ="https://github.com/nix-community/nixGL.git";
@@ -89,7 +92,8 @@ in
     libva-utils
     onedrive
     spotify
-    bitwarden-desktop
+    #bitwarden-desktop
+    nix-tree
     jetbrains-mono
     python312
     python312Packages.pip
@@ -102,7 +106,7 @@ in
     pavucontrol
     glibc
     firefox
-    logseq
+    (logseq.override {electron_39=pkgs.electron_40;})
     inotify-tools
     libsForQt5.qt5.qtwayland
     libsForQt5.qt5.qtbase
@@ -116,7 +120,7 @@ in
     arandr
     gnuplot
     ganttproject-bin
-    neofetch
+    hyfetch
     vulkan-tools
     vulkan-validation-layers
     mesa
@@ -132,9 +136,10 @@ in
     nixd
     exercism
     mamba-cpp
-    javaPackages.compiler.openjdk11-bootstrap
     net-tools
     plantuml
+    julia
+    opencode
   ];
     fonts.fontconfig = {
       enable = true;
