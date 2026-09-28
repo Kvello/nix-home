@@ -140,6 +140,7 @@ in
     plantuml
     julia
     opencode
+    claude-code
   ];
     fonts.fontconfig = {
       enable = true;
